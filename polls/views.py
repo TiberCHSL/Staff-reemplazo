@@ -19,9 +19,8 @@ def login(request):
 
 
 def registro(request):
-    registro = open("D:/La_U/unap/FLP/pagina/polls/Templates/Registro.html")
-    template = Template(registro.read())
-    registro.close()
+    with open(template_path2, 'r') as template_file:
+        template = Template(template_file.read())
     contexto = Context()
     documento = template.render(contexto)
     return HttpResponse(documento)
