@@ -27,10 +27,10 @@ def registro(request):
         form = RegistroForm(request.POST)
         if form.is_valid():
             form.save()  # Guarda el usuario en la base de datos
-            success = True  # Configura success en True para mostrar el mensaje de éxito
-            return render(request, 'registro.html', {'success': success})
             print("Formulario válido, datos guardados")
-            return redirect('login')
+            success_message = "Cuenta creada exitosamente."
+            return render(request, 'registro.html', {'success_message': success_message})
+            #return redirect('login')
         else:
             print(form.errors)  # Esto mostrará los errores del formulario en la consola del servidor
     else:

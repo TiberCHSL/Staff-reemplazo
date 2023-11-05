@@ -13,6 +13,7 @@ class User(models.Model):
     password = models.CharField(max_length=100, verbose_name="Contraseña")
     birth_date = models.DateField(verbose_name="Fecha de Nacimiento", null=True, blank=True)
     gender = models.CharField(max_length=10, verbose_name="Género", choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
+    role = models.CharField(max_length=10, verbose_name="Rol de usuario", choices=[('P', 'Postulante'), ('E', 'Empleador')])
 
     def __str__(self):
         return self.full_name

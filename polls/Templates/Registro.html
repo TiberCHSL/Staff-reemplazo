@@ -78,10 +78,32 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group col-md-6">
+                            <label for="role">Rol de usuario</label>
+                            <br>
+                            <select class="form-control" name="role">
+                                <option value="P">Postulante</option>
+                                <option value="E">Empleador</option>
+                            </select>
+                        </div>
 
                         <div class="col-md-12 row">
                             <button type="submit" class="enviar">Registrarse</button>
-                        </div>
+                            <div class="col-md-12 row">
+                                <a href="/login" class="enviar" id="returnButton">Volver al login</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    
+        <div id="successMessage" style="display: none; text-align: center; margin-top: 20px;">
+            {% if success_message %}
+                {{ success_message }}
+            {% endif %}
+        </div>
+
                     </form>
                 </div>
             </div>
@@ -93,19 +115,17 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script>
     $(document).ready(function() {
-        $("#confirmButton").on("click", function(event) {
-            event.preventDefault();
-
-            if (confirm("¿Desea crear una cuenta?")) {
-                // Muestra el mensaje de éxito
-                $("#successMessage").show();
-                // Redirige después de 2 segundos
-                setTimeout(function() {
-                    window.location.href = "/login";
-                }, 2000);
-            }
-        });
+    $("#confirmButton").on("click", function(event) {
+        event.preventDefault();
+        
+        if (confirm("¿Desea crear una cuenta?")) {
+            // Muestra el mensaje de éxito
+            $("#successMessage").show();
+            // Muestra el botón para volver al login
+            $("#loginButton").show();
+        }
     });
+});
     </script>> -->
 </body>
 </html>
