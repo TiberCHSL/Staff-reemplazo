@@ -24,5 +24,5 @@ urlpatterns = [
     path("polls/", include("polls.urls")),
     path("admin/", admin.site.urls),
     path("login/", login),
-    path("login/Registro",registro)
+    path("login/registro",registro)
 ]
