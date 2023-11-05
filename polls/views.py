@@ -3,6 +3,7 @@ from django.template import Template, Context
 import os
 from django.http import HttpResponse
 from .forms import RegistroForm
+from .models import User
 
 template_path = os.path.join('polls', 'Templates', 'login.html')
 template_path2 = os.path.join('polls', 'Templates', 'Registro.html')
@@ -20,15 +21,23 @@ def login(request):
 
 
 def registro(request):
+    print("Vistaqla")
     if request.method == 'POST':
+        print("Test")
         form = RegistroForm(request.POST)
         if form.is_valid():
             form.save()  # Guarda el usuario en la base de datos
-            # Redirige al usuario a la página de inicio de sesión o confirmación
-            return redirect('/login')  # Reemplaza '/login' con la ruta real
+            success = True  # Configura success en True para mostrar el mensaje de éxito
+            return render(request, 'registro.html', {'success': success})
+            print("Formulario válido, datos guardados")
+            return redirect('login')
+        else:
+            print(form.errors)  # Esto mostrará los errores del formulario en la consola del servidor
     else:
         form = RegistroForm()
 
-
     return render(request, 'registro.html', {'form': form})
+
+
+    #return render(request, 'registro.html', {'form': form})
 # Create your views here.
