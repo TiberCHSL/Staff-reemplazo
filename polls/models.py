@@ -1,15 +1,12 @@
-import datetime
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
-
-
 
 class User(models.Model):
     full_name = models.CharField(max_length=100, verbose_name="Nombre Completo")
     email = models.EmailField(verbose_name="Correo Electrónico")
     phone = models.CharField(max_length=20, verbose_name="Teléfono")
-    rut = models.CharField(primary_key = True,max_length=12, verbose_name="RUT")
-    #verif = models.CharField(max_length=1, verbose_name="Digito verificador", choices=[('0', '0'),('1', '1'),('2', '2'),('3', '3'),('4', '4'),('5', '5'),('6', '6'),('7', '7'),('8', '8'),('9', '9'),('K', 'K')])
+    rut = models.CharField(primary_key=True, max_length=12, verbose_name="RUT")
     password = models.CharField(max_length=100, verbose_name="Contraseña")
     birth_date = models.DateField(verbose_name="Fecha de Nacimiento", null=True, blank=True)
     gender = models.CharField(max_length=10, verbose_name="Género", choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
@@ -22,12 +19,36 @@ class User(models.Model):
         verbose_name = "Usuario"
         verbose_name_plural = "Usuarios"
 
+# A continuación, el modelo Curriculum con el campo last_updated añadido
 
+class Curriculum(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    resume = models.FileField(upload_to='resumes/')
+    skills = models.TextField()
+    experience = models.TextField()
+    education = models.CharField(max_length=255)
+    certifications = models.CharField(max_length=255, blank=True)
+    last_updated = models.DateTimeField(default=timezone.now)  # Campo añadido
 
-#class Choice(models.Model):
-    #question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    #choice_text = models.CharField(max_length=200)
-    #votes = models.IntegerField(default=0)
-    #def __str__(self):
-        #return self.choice_text
-# Create your models here.
+    def save(self, *args, **kwargs):
+        self.last_updated = timezone.now()
+        super(Curriculum, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.user.full_name}'s Curriculum"
+
+    def get_absolute_url(self):
+        return reverse('curriculum-detail', kwargs={'pk': self.pk})
+
+class ReplacementRequest(models.Model):
+    requested_by = models.ForeignKey(User, related_name='requested_replacements', on_delete=models.CASCADE)
+    date_needed = models.DateField()
+    reason = models.TextField()
+    skills_required = models.TextField()
+    urgency_level = models.CharField(max_length=50, choices=[('Low', 'Low'), ('Medium', 'Medium'), ('High', 'High')])
+
+    def __str__(self):
+        return f"Replacement request by {self.requested_by.full_name} for {self.date_needed}"
+
+    def get_absolute_url(self):
+        return reverse('replacement-request-detail', kwargs={'pk': self.pk})
