@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Aplicación de Django</title>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido a mi página con Django</h1>
+    </header>
+    <main>
+        <!-- Si pasaste una variable 'message' desde tu vista, se mostrará aquí -->
+        {% if message %}
+            <p>{{ message }}</p>
+        {% else %}
+            <p>¡Hola, mundo Django!</p>
+        {% endif %}
+        
+        <!-- Aquí puedes incluir más lógica de tu aplicación -->
+        <!-- Por ejemplo, un bucle para mostrar elementos de una lista -->
+        {% for item in item_list %}
+            <div>
+                <!-- Muestra el contenido de cada elemento -->
+                {{ item }}
+            </div>
+        {% endfor %}
+    </main>
+    <footer>
+        <p>Hecho con ❤️ en Django</p>
+    </footer>
+</body>
+</html>
