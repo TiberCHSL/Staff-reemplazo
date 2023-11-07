@@ -1,14 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 from django.core.mail import send_mail  # Importamos la función de Django para enviar emails
 from django.conf import settings  # Importamos la configuración de Django para usar las variables de configuración del correo electrónico
 from .forms import CurriculumForm, ReplacementRequestForm, RegistroForm
 from .models import Curriculum, ReplacementRequest, User
+from django.contrib.auth.hashers import check_password, make_password
 from django.views.generic import ListView
-from django.contrib.auth import authenticate, login as auth_login
-from django.shortcuts import redirect
 
 
 # Definir las vistas faltantes
@@ -16,31 +17,38 @@ def index(request):
     # Aquí iría la lógica de tu vista de inicio
     return render(request, 'index.html')  # Asegúrate de tener una plantilla 'index.html'
 
-def login(request):
+
+def login_view(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            auth_login(request, user)
-            # Redirecciona según el rol del usuario
-            if user.role == 'E':
-                return redirect('vista_empleador')
-            elif user.role == 'P':
+        username = request.POST['username']
+        password = request.POST['password']
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            messages.error(request, 'Invalid username or password.')
+            return render(request, 'login.html')
+        if check_password(password, user.password):
+            print("Usuario Autenticado")
+            login(request, user)
+            if user.role == 'P':
                 return redirect('vista_postulante')
+            elif user.role == 'E':
+                return redirect('vista_empleador')
         else:
-            # Devuelve un mensaje de error de inicio de sesión
-            return render(request, 'login.html', {'error': 'Email o contraseña inválidos.'})
-    else:
-        return render(request, 'login.html')
+            messages.error(request, 'Invalid username or password.')
+    return render(request, 'login.html')
+
 
 def registro(request):
     form = RegistroForm(request.POST or None)
+    print(form.data)
+    print(form.errors)
     if request.method == 'POST' and form.is_valid():
-        form.save()
+        user = form.save(commit=False)
+        user.password = make_password(user.password)
+        user.save()
         return HttpResponseRedirect('/login/')  # Redirige a la página de inicio de sesión después del registro
     return render(request, 'registro.html', {'form': form})  # Asegúrate de tener una plantilla 'registro.html'
-
 
 
 def vista_empleador(request):

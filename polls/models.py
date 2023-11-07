@@ -4,6 +4,7 @@ from django.utils import timezone
 
 class User(models.Model):
     full_name = models.CharField(max_length=100, verbose_name="Nombre Completo")
+    username = models.CharField(max_length=100, verbose_name="Nombre de usuario") 
     email = models.EmailField(verbose_name="Correo Electrónico")
     phone = models.CharField(max_length=20, verbose_name="Teléfono")
     rut = models.CharField(primary_key=True, max_length=12, verbose_name="RUT")
@@ -11,6 +12,7 @@ class User(models.Model):
     birth_date = models.DateField(verbose_name="Fecha de Nacimiento", null=True, blank=True)
     gender = models.CharField(max_length=10, verbose_name="Género", choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
     role = models.CharField(max_length=10, verbose_name="Rol de usuario", choices=[('P', 'Postulante'), ('E', 'Empleador')])
+    last_login = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.full_name
