@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Currículums</title>
+</head>
+<body>
+    <h1>Lista de Currículums</h1>
+    <ul>
+        {% for curriculum in curriculums %}
+            <li>
+                <h2>Currículum de: {{ curriculum.user.full_name }}</h2>
+                <p>Habilidades: {{ curriculum.skills }}</p>
+                <p>Experiencia: {{ curriculum.experience }}</p>
+                <p>Educación: {{ curriculum.education }}</p>
+                <p>Certificaciones: {{ curriculum.certifications }}</p>
+                <p>Última actualización: {{ curriculum.last_updated }}</p>
+                <a href="{{ curriculum.get_absolute_url }}">Ver detalles</a>
+            </li>
+        {% empty %}
+            <li>No hay currículums disponibles.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

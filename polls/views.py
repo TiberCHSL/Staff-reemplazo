@@ -10,6 +10,10 @@ from .forms import CurriculumForm, ReplacementRequestForm, RegistroForm
 from .models import Curriculum, ReplacementRequest, User
 from django.contrib.auth.hashers import check_password, make_password
 from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import ReplacementRequestForm
+from .models import ReplacementRequest
 
 
 # Definir las vistas faltantes
@@ -127,3 +131,43 @@ class CandidateListView(LoginRequiredMixin, ListView):
 def curriculum_list(request):
     curriculums = Curriculum.objects.all()  # Obtiene todos los currículums de la base de datos
     return render(request, 'polls/curriculum_list.html', {'curriculums': curriculums})
+
+
+
+
+
+@login_required
+def create_replacement_request(request):
+    if request.method == 'POST':
+        form = ReplacementRequestForm(request.POST)
+        if form.is_valid():
+            replacement_request = form.save(commit=False)
+            replacement_request.requested_by = request.user
+            replacement_request.save()
+            return redirect('replacement_request_list')
+    else:
+        form = ReplacementRequestForm()
+    return render(request, 'create_replacement_request', {'form': form})
+
+@login_required
+def replacement_request_list(request):
+    requests = ReplacementRequest.objects.filter(requested_by=request.user)
+    return render(request, 'polls/replacement_request_list.html', {'requests': requests})
+
+@login_required
+def edit_replacement_request(request, pk):
+    replacement_request = get_object_or_404(ReplacementRequest, pk=pk, requested_by=request.user)
+    if request.method == 'POST':
+        form = ReplacementRequestForm(request.POST, instance=replacement_request)
+        if form.is_valid():
+            form.save()
+            return redirect('replacement_request_list')
+    else:
+        form = ReplacementRequestForm(instance=replacement_request)
+    return render(request,'replacement_request_form.html', {'form': form})
+
+@login_required
+def cancel_replacement_request(request, pk):
+    replacement_request = get_object_or_404(ReplacementRequest, pk=pk, requested_by=request.user)
+    replacement_request.delete()
+    return redirect('replacement_request_list')

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Vista de Empleador</title>
     <!-- Asegúrate de incluir tus archivos de estilo CSS y cualquier otro que necesites -->
-    <link rel="stylesheet" href="ruta/a/tu/estilo.css">
 </head>
 <body>
     <header>
@@ -17,13 +16,20 @@
             <h2>Panel de Control</h2>
             <!-- Agrega aquí más secciones específicas para empleadores -->
             <p>Aquí puedes gestionar tus ofertas de trabajo, ver postulantes y mucho más.</p>
-            <a href="ruta/a/ofertas/de/trabajo">Gestionar Ofertas de Trabajo</a>
-            <a href="ruta/a/postulantes">Ver Postulantes</a>
+            <a href="{% url 'create_replacement_request' %}">Crear nuevas solicitudes de reemplazo</a>
+            <a href="{% url 'replacement_request_list' %}">Ver la lista de todas las solicitudes de reemplazo</a>
+            <!-- Asumiendo que tienes una URL para editar solicitudes que incluye el ID de la solicitud -->
+            <!-- Por ejemplo, para editar la solicitud con ID 1: -->
+            <a href="{% url 'edit_replacement_request' pk=1 %}">Editar solicitudes de reemplazo pendientes</a>
+            <!-- Asumiendo que tienes una URL para cancelar solicitudes que incluye el ID de la solicitud -->
+            <!-- Por ejemplo, para cancelar la solicitud con ID 1: -->
+            <a href="{% url 'cancel_replacement_request' pk=1 %}" onclick="return confirm('¿Estás seguro de que quieres cancelar esta solicitud?');">Cancelar solicitudes de reemplazo</a>
         </section>
     </main>
     
     <footer>
         <!-- Tu pie de página aquí -->
     </footer>
+
 </body>
 </html>

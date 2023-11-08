@@ -1,0 +1,16 @@
+<!-- polls/templates/polls/replacement_request_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Solicitudes de Reemplazo</h2>
+  <a href="{% url 'create_replacement_request' %}">Crear nueva solicitud</a>
+  <ul>
+    {% for request in requests %}
+      <li>
+        {{ request.date_needed }} - {{ request.reason }}
+        <a href="{% url 'edit_replacement_request' request.pk %}">Editar</a>
+        <a href="{% url 'cancel_replacement_request' request.pk %}" onclick="return confirm('¿Estás seguro?');">Cancelar</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

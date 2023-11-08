@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from polls.views import login_view, registro
-
+from polls.views import login_view, registro,create_replacement_request
 
 
 urlpatterns = [
     path("polls/", include("polls.urls")),
     path("admin/", admin.site.urls),
     path("login/", login_view),
-    path("login/registro",registro)
+    path("login/registro",registro),
+    path("polls/polls/replacement-requests/new/",create_replacement_request),
+    
 ]
