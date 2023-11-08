@@ -136,7 +136,7 @@ def curriculum_list(request):
 
 
 
-@login_required
+#@login_required
 def create_replacement_request(request):
     if request.method == 'POST':
         form = ReplacementRequestForm(request.POST)
@@ -147,7 +147,7 @@ def create_replacement_request(request):
             return redirect('replacement_request_list')
     else:
         form = ReplacementRequestForm()
-    return render(request, 'create_replacement_request', {'form': form})
+    return render(request, 'create_replacement_request.html', {'form': form})
 
 @login_required
 def replacement_request_list(request):

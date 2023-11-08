@@ -56,7 +56,7 @@ ROOT_URLCONF = 'pagina.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'pagina', 'polls', 'Templates')],
+        'DIRS': [os.path.join(BASE_DIR,'polls', 'Templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,5 +126,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_CHARSET = 'utf-8'
 DEFAULT_CONTENT_TYPE = 'text/html; charset=utf-8'
+LOGIN_URL = 'login'
 
 
