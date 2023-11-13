@@ -24,23 +24,22 @@ def index(request):
     return render(request, 'base.html')  # Asegúrate de tener una plantilla 'index.html'
 
 
+
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            messages.error(request, 'Invalid username or password.')
-            return render(request, 'login.html')
-        if check_password(password, user.password):
-            print("Usuario Autenticado")
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
             login(request, user)
-            if user.role == 'P':
+            print("Usuario Autenticado")
+            if user.usuario.role == 'P':
                 return redirect('vista_postulante')
-            elif user.role == 'E':
+            elif user.usuario.role == 'E':
                 return redirect('vista_empleador')
         else:
+            print("Mensaje de error")
             messages.error(request, 'Invalid username or password.')
     return render(request, 'login.html')
 

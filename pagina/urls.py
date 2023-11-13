@@ -25,7 +25,7 @@ urlpatterns = [
     path("polls/", include("polls.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
-    path("login/", login_view),
+    path("login/", login_view, name="login"),
     path("login/registro",registro),
     #path("polls/polls/replacement-requests/new/",create_replacement_request),
     

@@ -8,7 +8,7 @@ from . import views
 
 urlpatterns = [
     path("", index, name="index"),
-    path("login/", login, name="login"),
+    #path("login/", login, name="login"),
     path("registro/", registro, name="registro"),
     #path('curriculum/', CurriculumView.as_view(), name='curriculum'),
     #path('request-replacement/', ReplacementRequestView.as_view(), name='request-replacement'),
