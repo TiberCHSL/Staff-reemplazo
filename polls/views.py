@@ -68,14 +68,17 @@ def registro(request):
     return render(request, 'registro.html', {'user_form': user_form, 'registro_form': registro_form})
 
 
+@login_required
 def vista_empleador(request):
     # Aquí va la lógica de la vista para el empleador
     return render(request, 'empleador.html')  # Asegúrate de tener una plantilla 'empleador.html'
 
+@login_required
 def vista_postulante(request):
     # Tu lógica para la vista postulante va aquí
     return render(request, 'postulante.html')  # Asegúrate de que esta plantilla existe
 
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('/')
