@@ -28,76 +28,66 @@
                     <h4 class="titleform center">Formulario de Registro</h4>
                     <form class="centerf vertical-form" method="post" action="{% url 'registro' %}">
                         {% csrf_token %}
-                        <div class="col-md-12 row">
-                            <div class="form-group col-md-12">
-                                <label for="nombre">Nombre Completo</label>
-                                <br>
-                                <input class="form-control" type="text" name="full_name" placeholder="Por favor, ingrese su nombre completo.">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="Nombre de Usuario">Nombre de Usuario</label>
-                                <br>
-                                <input class="form-control" type="text" name="username" placeholder="Por favor, ingrese su nombre de usuario.">
-                            </div>
+                        <div class="form-group">
+                            <label for="{{ user_form.username.id_for_label }}">Nombre de Usuario</label>
+                            <input type="text" name="{{ user_form.username.html_name }}" id="{{ user_form.username.id_for_label }}" class="form-control" placeholder="Enter your username">
+                            {{ user_form.username.errors }}
                         </div>
-
-                        <div class="col-md-12 row">
-                            <div class="form-group col-md-6">
-                                <label for="email">E-mail</label>
-                                <br>
-                                <input class="form-control" type="text" name="email" placeholder="Por favor, ingrese un email válido.">
-                            </div>
-                            <div class "form-group col-md-6">
-                                <label for="telefono">Teléfono</label>
-                                <br>
-                                <input class="form-control" type="text" name="phone" placeholder="Por favor, ingrese su número de teléfono.">
-                            </div>
+                        <div class="form-group">
+                            <label for="{{ user_form.first_name.id_for_label }}">Nombres</label>
+                            <input type="text" name="{{ user_form.first_name.html_name }}" id="{{ user_form.first_name.id_for_label }}" class="form-control" placeholder="Enter your first name">
+                            {{ user_form.first_name.errors }}
                         </div>
-
-                        <div class="col-md-12 row">
-                            <div class="form-group col-md-6">
-                                <label for="rut">RUT</label>
-                                <br>
-                                <input class="form-control" type="text" name="rut" placeholder="Por favor, ingrese su RUT.">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="password">Contraseña</label>
-                                <br>
-                                <input class="form-control" type="password" name="password" placeholder="Por favor, ingrese su contraseña.">
-                            </div>
+                        <div class="form-group">
+                            <label for="{{ user_form.last_name.id_for_label }}">Apellidos</label>
+                            <input type="text" name="{{ user_form.last_name.html_name }}" id="{{ user_form.last_name.id_for_label }}" class="form-control" placeholder="Enter your last name">
+                            {{ user_form.last_name.errors }}
                         </div>
-
-                        <div class="col-md-12 row">
-                            <div class="form-group col-md-6">
-                                <label for="birth_date">Fecha de Nacimiento</label>
-                                <br>
-                                <input class="form-control" type="date" name="birth_date" placeholder="Fecha de Nacimiento">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="gender">Género</label>
-                                <br>
-                                <select class="form-control" name="gender">
-                                    <option value="M">Masculino</option>
-                                    <option value="F">Femenino</option>
-                                    <option value="O">Otro</option>
-                                </select>
-                            </div>
+                        <div class="form-group">
+                            <label for="{{ user_form.email.id_for_label }}">Email</label>
+                            <input type="email" name="{{ user_form.email.html_name }}" id="{{ user_form.email.id_for_label }}" class="form-control" placeholder="Enter your email">
+                            {{ user_form.email.errors }}
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="role">Rol de usuario</label>
-                            <br>
-                            <select class="form-control" name="role">
+                        <div class="form-group">
+                            <label for="{{ user_form.password.id_for_label }}">Contraseña</label>
+                            <input type="password" name="{{ user_form.password.html_name }}" id="{{ user_form.password.id_for_label }}" class="form-control" placeholder="Enter your password">
+                            {{ user_form.password.errors }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ registro_form.phone.id_for_label }}">Número de celular</label>
+                            <input type="text" name="{{ registro_form.phone.html_name }}" id="{{ registro_form.phone.id_for_label }}" class="form-control" placeholder="Enter your phone number">
+                            {{ registro_form.phone.errors }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ registro_form.rut.id_for_label }}">RUT</label>
+                            <input type="text" name="{{ registro_form.rut.html_name }}" id="{{ registro_form.rut.id_for_label }}" class="form-control" placeholder="Enter your RUT">
+                            {{ registro_form.rut.errors }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ registro_form.birth_date.id_for_label }}">Fecha de nacimiento</label>
+                            <input type="date" name="{{ registro_form.birth_date.html_name }}" id="{{ registro_form.birth_date.id_for_label }}" class="form-control">
+                            {{ registro_form.birth_date.errors }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ registro_form.gender.id_for_label }}">Género</label>
+                            <select name="{{ registro_form.gender.html_name }}" id="{{ registro_form.gender.id_for_label }}" class="form-control">
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                                <option value="O">Otro</option>
+                            </select>
+                            {{ registro_form.gender.errors }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ registro_form.role.id_for_label }}">Role</label>
+                            <select name="{{ registro_form.role.html_name }}" id="{{ registro_form.role.id_for_label }}" class="form-control">
                                 <option value="P">Postulante</option>
                                 <option value="E">Empleador</option>
                             </select>
+                            {{ registro_form.role.errors }}
                         </div>
-
-                        <div class="col-md-12 row">
-                            <button type="submit" class="enviar">Registrarse</button>
-                            <div class="col-md-12 row">
-                                <a href="/login" class="enviar" id="returnButton">Volver al login</a>
-                            </div>
-                        </form>
+                        <button type="submit" class="enviar">Registrarse</button>
+                        <a href="/" class="enviar" id="returnButton">Volver al inicio</a>
+                    </form>
                     </div>
                 </div>
             </div>

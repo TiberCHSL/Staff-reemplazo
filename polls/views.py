@@ -6,20 +6,22 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.core.mail import send_mail  # Importamos la función de Django para enviar emails
 from django.conf import settings  # Importamos la configuración de Django para usar las variables de configuración del correo electrónico
-from .forms import CurriculumForm, ReplacementRequestForm, RegistroForm
-from .models import Curriculum, ReplacementRequest, User
+from .forms import RegistroForm, UserRegistroForm
+#from .forms import CurriculumForm, ReplacementRequestForm, RegistroForm
+#from .models import Curriculum, ReplacementRequest, User
+from .models import User
 from django.contrib.auth.hashers import check_password, make_password
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ReplacementRequestForm
-from .models import ReplacementRequest
+#from .forms import ReplacementRequestForm
+
 
 
 # Definir las vistas faltantes
 def index(request):
     # Aquí iría la lógica de tu vista de inicio
-    return render(request, 'index.html')  # Asegúrate de tener una plantilla 'index.html'
+    return render(request, 'base.html')  # Asegúrate de tener una plantilla 'index.html'
 
 
 def login_view(request):
@@ -44,15 +46,27 @@ def login_view(request):
 
 
 def registro(request):
-    form = RegistroForm(request.POST or None)
-    print(form.data)
-    print(form.errors)
-    if request.method == 'POST' and form.is_valid():
-        user = form.save(commit=False)
-        user.password = make_password(user.password)
-        user.save()
-        return HttpResponseRedirect('/login/')  # Redirige a la página de inicio de sesión después del registro
-    return render(request, 'registro.html', {'form': form})  # Asegúrate de tener una plantilla 'registro.html'
+    if request.method == 'POST':
+        user_form = UserRegistroForm(request.POST)
+        registro_form = RegistroForm(request.POST)
+        print(request.POST)
+        if user_form.is_valid() and registro_form.is_valid():
+            user = user_form.save(commit=False)
+            user.set_password(user_form.cleaned_data['password'])
+            print(user)
+            user.save()
+            usuario = registro_form.save(commit=False)
+            usuario.user = user
+            print(usuario)
+            usuario.save()
+            return redirect('/')  # replace 'success_url' with the name of the URL you want to redirect to
+        else:
+            print("User form errors:", user_form.errors)  # print User form errors
+            print("Registro form errors:", registro_form.errors)  # print Registro form errors
+    else:
+        user_form = UserRegistroForm()
+        registro_form = RegistroForm()
+    return render(request, 'registro.html', {'user_form': user_form, 'registro_form': registro_form})
 
 
 def vista_empleador(request):
@@ -66,7 +80,7 @@ def vista_postulante(request):
 
 
 
-class CurriculumView(LoginRequiredMixin, View):
+#class CurriculumView(LoginRequiredMixin, View):
     form_class = CurriculumForm
     initial = {'key': 'value'}
     template_name = 'curriculum_form.html'
@@ -95,7 +109,7 @@ class CurriculumView(LoginRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
     
       
-class ReplacementRequestView(LoginRequiredMixin, View):
+#class ReplacementRequestView(LoginRequiredMixin, View):
     form_class = ReplacementRequestForm
     initial = {'key': 'value'}
     template_name = 'replacement_request_form.html'
@@ -116,7 +130,7 @@ class ReplacementRequestView(LoginRequiredMixin, View):
 
 # Vista de lista para Candidate
 # Vista de lista para los usuarios que son candidatos
-class CandidateListView(LoginRequiredMixin, ListView):
+#class CandidateListView(LoginRequiredMixin, ListView):
     model = User  # Usamos el modelo User en lugar de Candidate
     context_object_name = 'candidates'
     template_name = 'candidate_list.html'
@@ -128,16 +142,16 @@ class CandidateListView(LoginRequiredMixin, ListView):
     
 
     
-def curriculum_list(request):
-    curriculums = Curriculum.objects.all()  # Obtiene todos los currículums de la base de datos
-    return render(request, 'polls/curriculum_list.html', {'curriculums': curriculums})
+    def curriculum_list(request):
+        curriculums = Curriculum.objects.all()  # Obtiene todos los currículums de la base de datos
+        return render(request, 'polls/curriculum_list.html', {'curriculums': curriculums})
 
 
 
 
 
 #@login_required
-def create_replacement_request(request):
+#def create_replacement_request(request):
     if request.method == 'POST':
         form = ReplacementRequestForm(request.POST)
         if form.is_valid():
@@ -149,25 +163,25 @@ def create_replacement_request(request):
         form = ReplacementRequestForm()
     return render(request, 'create_replacement_request.html', {'form': form})
 
-@login_required
-def replacement_request_list(request):
-    requests = ReplacementRequest.objects.filter(requested_by=request.user)
-    return render(request, 'polls/replacement_request_list.html', {'requests': requests})
+#@login_required
+#def replacement_request_list(request):
+    #requests = ReplacementRequest.objects.filter(requested_by=request.user)
+    #return render(request, 'polls/replacement_request_list.html', {'requests': requests})
 
-@login_required
-def edit_replacement_request(request, pk):
-    replacement_request = get_object_or_404(ReplacementRequest, pk=pk, requested_by=request.user)
-    if request.method == 'POST':
-        form = ReplacementRequestForm(request.POST, instance=replacement_request)
-        if form.is_valid():
-            form.save()
-            return redirect('replacement_request_list')
-    else:
-        form = ReplacementRequestForm(instance=replacement_request)
-    return render(request,'replacement_request_form.html', {'form': form})
+#@login_required
+#def edit_replacement_request(request, pk):
+    #replacement_request = get_object_or_404(ReplacementRequest, pk=pk, requested_by=request.user)
+    #if request.method == 'POST':
+        #form = ReplacementRequestForm(request.POST, instance=replacement_request)
+        #if form.is_valid():
+            #form.save()
+            #return redirect('replacement_request_list')
+    #else:
+        #form = ReplacementRequestForm(instance=replacement_request)
+    #return render(request,'replacement_request_form.html', {'form': form})
 
-@login_required
-def cancel_replacement_request(request, pk):
-    replacement_request = get_object_or_404(ReplacementRequest, pk=pk, requested_by=request.user)
-    replacement_request.delete()
-    return redirect('replacement_request_list')
+#@login_required
+#def cancel_replacement_request(request, pk):
+    #replacement_request = get_object_or_404(ReplacementRequest, pk=pk, requested_by=request.user)
+    #replacement_request.delete()
+    #return redirect('replacement_request_list')
