@@ -15,6 +15,7 @@ urlpatterns = [
     #path('candidates/', CandidateListView.as_view(), name='candidates-list'),
     path('postulante/', views.vista_postulante, name='vista_postulante'),
     path('empleador/', views.vista_empleador, name='vista_empleador'),
+    path('logout/', views.logout_view, name='logout'),
     #path('curriculums/', curriculum_list, name='curriculum-list'),
     #path('replacement-requests/new/', create_replacement_request, name='create_replacement_request'),
     #path('replacement-requests/', replacement_request_list, name='replacement_request_list'),

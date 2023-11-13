@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.mail import send_mail  # Importamos la función de Django para enviar emails
 from django.conf import settings  # Importamos la configuración de Django para usar las variables de configuración del correo electrónico
@@ -75,6 +75,10 @@ def vista_empleador(request):
 def vista_postulante(request):
     # Tu lógica para la vista postulante va aquí
     return render(request, 'postulante.html')  # Asegúrate de que esta plantilla existe
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')
 
 
 
