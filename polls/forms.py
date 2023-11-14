@@ -3,6 +3,7 @@ from django import forms
 from .models import Usuario
 from django.contrib.auth.models import User
 #from .models import Usuario, Curriculum, ReplacementRequest
+from .models import Education, Experience
 
 class UserRegistroForm(forms.ModelForm):
     class Meta:
@@ -13,6 +14,20 @@ class RegistroForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ['phone', 'rut', 'birth_date', 'gender', 'role']
+
+
+class EducationForm(forms.ModelForm):
+    class Meta:
+        model = Education
+        fields = ['niv_estudio', 'carrera', 'institucion', 'estado', 'fecha_inicio', 'fecha_termino']
+
+class ExperienceForm(forms.ModelForm):
+    class Meta:
+        model = Experience
+        fields = ['empresa', 'ano_exp', 'cargo', 'desc']
+
+
+
 
 
 #class CurriculumForm(forms.ModelForm):

@@ -15,7 +15,7 @@ from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 #from .forms import ReplacementRequestForm
-
+from .forms import EducationForm, ExperienceForm
 
 
 # Definir las vistas faltantes
@@ -82,6 +82,44 @@ def vista_postulante(request):
 def logout_view(request):
     logout(request)
     return redirect('/')
+
+
+
+
+
+
+
+def add_education(request):
+    if request.method == 'POST':
+        form = EducationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('education_list')
+    else:
+        form = EducationForm()
+    return render(request, 'education/add_education.html', {'form': form})
+
+def add_experience(request):
+    if request.method == 'POST':
+        form = ExperienceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('experience_list')
+    else:
+        form = ExperienceForm()
+    return render(request, 'experience/add_experience.html', {'form': form})
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
