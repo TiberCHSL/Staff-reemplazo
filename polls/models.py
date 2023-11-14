@@ -181,7 +181,8 @@ class ReplacementRequest(models.Model):
     carrera = models.CharField(max_length=100, verbose_name="Carrera requerida",choices=CARRERA_CHOICES, null=True, blank=True)
     ano_exp = models.IntegerField()
     desc = models.TextField()
-    idioma_requerido = models.CharField(max_length=30, verbose_name="Idioma", choices=IDIOMA_CHOICES, null = True, blank = True)
+    idioma_requerido = models.CharField(max_length=30, verbose_name="Idioma Requerido", choices=IDIOMA_CHOICES, null = True, blank = True)
+    gender_required = models.CharField(max_length=10, verbose_name="Género Requerido", choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')], null = True, blank = True)
 
 
 #class PostulateView(models.Model):
