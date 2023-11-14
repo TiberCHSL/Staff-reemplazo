@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, login, registro, delete_request
+from .views import index, login, registro, delete_request, view_candidates
 #from .views import index, login, registro, CurriculumView, ReplacementRequestView, CandidateListView
 from . import views
 #from .views import curriculum_list
@@ -30,4 +30,5 @@ urlpatterns = [
     path('polls/replacement_request/add/', views.add_replacement_request, name='add_replacement_request'),
     path('delete_request/<int:request_id>/', delete_request, name='delete_request'),
     path('replacement_request/<int:pk>/edit/', edit_replacement_request, name='edit_replacement_request'),
+    path('view_candidates/<int:request_id>/', view_candidates, name='view_candidates'),
 ]
