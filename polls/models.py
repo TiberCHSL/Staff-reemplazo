@@ -172,12 +172,13 @@ class Language(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     idioma = models.CharField(max_length=30, verbose_name="Idioma", choices=IDIOMA_CHOICES)
 
-#class ReplacementRequest(models.Model):
-    #requested_by = models.ForeignKey(User, related_name='Reemplazo solicitado', on_delete=models.CASCADE)
-    #date_needed = models.DateField()
-    #reason = models.TextField()
-    #skills_required = models.TextField()
-    #urgency_level = models.CharField(max_length=50, choices=[('Low', 'Low'), ('Medium', 'Medium'), ('High', 'High')])
+class ReplacementRequest(models.Model):
+    user = models.ForeignKey(User, related_name='Empleador', on_delete=models.CASCADE)
+    fecha = models.DateField()
+    cargo = models.CharField(max_length=40)
+    carrera = models.CharField(max_length=100, choices=CARRERA_CHOICES, null=True, blank=True)
+    ano_exp = models.IntegerField()
+    idioma_requerido = models.CharField(max_length=30, verbose_name="Idioma", choices=IDIOMA_CHOICES, null = True, blank = True)
 
 
 #class PostulateView(models.Model):
