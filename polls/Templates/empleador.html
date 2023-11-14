@@ -32,7 +32,9 @@
             Idioma Requerido: {{ request.idioma_requerido }}<br>
             Género Requerido: {{ request.gender_required }}
         </p>
-{% endfor %}
+            <a href="{% url 'delete_request' request.id %}" class="btn btn-danger">Eliminar</a>
+            <a  class="btn btn-primary">Ver candidatos</a>
+            {% endfor %}
         </section>
     </main>
     
@@ -43,3 +45,7 @@
 </body>
 </html>
 {% endblock %}
+
+
+<!--<a href="{% url 'delete_request' request.id %}" class="btn btn-danger">Eliminar</a>
+<a href="{% url 'view_candidates' request.id %}" class="btn btn-primary">Ver candidatos</a>

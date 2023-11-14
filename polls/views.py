@@ -7,8 +7,6 @@ from django.contrib import messages
 from django.core.mail import send_mail  # Importamos la función de Django para enviar emails
 from django.conf import settings  # Importamos la configuración de Django para usar las variables de configuración del correo electrónico
 from .forms import RegistroForm, UserRegistroForm, EducationForm, ExperienceForm, LanguageForm, ReplacementRequestForm
-#from .forms import CurriculumForm, ReplacementRequestForm, RegistroForm
-#from .models import Curriculum, ReplacementRequest, User
 from .models import User, ReplacementRequest
 from django.contrib.auth.hashers import check_password, make_password
 from django.views.generic import ListView
@@ -149,7 +147,17 @@ def add_replacement_request(request):
         form = ReplacementRequestForm()
     return render(request, 'create_replacement_request.html', {'form': form})
 
+@login_required
+def delete_request(request, request_id):
+    replacement_request = get_object_or_404(ReplacementRequest, id=request_id)
+    replacement_request.delete()
+    return redirect('vista_empleador')  # replace 'empleador' with the name of your empleador view
 
+#def view_candidates(request, request_id):
+    #replacement_request = get_object_or_404(ReplacementRequest, id=request_id)
+    # Replace the following line with your logic for retrieving candidates
+    #candidates = Candidate.objects.filter(replacement_request=replacement_request)
+    #return render(request, 'candidates.html', {'candidates': candidates})
 
 
 
