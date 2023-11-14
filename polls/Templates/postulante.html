@@ -21,12 +21,12 @@
             <!-- Agrega aquí más secciones específicas para postulantes -->
             <p>Aquí puedes buscar ofertas de trabajo y gestionar tus aplicaciones.</p>
             <a href="ruta/a/busqueda/de/trabajo">Buscar Trabajos</a>
-            <a href="ruta/a/mis/aplicaciones">Mis Aplicaciones</a>
+            <a href="{% url 'add_education' %}">Agregar Estudios</a>
         </section>
         <section>
-            <h2>Mi Curriculum</h2>
-            <p>Gestiona tu curriculum y mantenlo actualizado para los empleadores.</p>
-            <a href="ruta/a/mi/curriculum">Actualizar Curriculum</a>
+            <h2>Mis Experiencias</h2>
+            <p>Gestiona tus experiencias laborales.</p>
+            <a href="{% url 'add_experience' %}">Agregar Experiencia Laboral</a>
         </section>
     </main>
 {% endblock %}

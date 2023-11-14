@@ -88,26 +88,31 @@ def logout_view(request):
 
 
 
-
+@login_required
 def add_education(request):
     if request.method == 'POST':
         form = EducationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('education_list')
+            education = form.save(commit=False)
+            education.user = request.user
+            education.save()
+            return render(request, 'empleador.html')
     else:
         form = EducationForm()
-    return render(request, 'education/add_education.html', {'form': form})
+    return render(request, 'add_education.html', {'form': form})
 
+@login_required
 def add_experience(request):
     if request.method == 'POST':
         form = ExperienceForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('experience_list')
+            experience = form.save(commit=False)
+            experience.user = request.user
+            experience.save()
+            return render(request, 'empleador.html')
     else:
         form = ExperienceForm()
-    return render(request, 'experience/add_experience.html', {'form': form})
+    return render(request, 'add_experience.html', {'form': form})
 
 
 

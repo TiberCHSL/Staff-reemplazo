@@ -24,6 +24,6 @@ urlpatterns = [
      #path('accounts/login/', views.login_view, name='login'),
     #path('polls/replacement-requests/new/', views.create_replacement_request, name='create_replacement_request'),
     #path('polls/replacement-requests/edit/<int:pk>/', views.edit_replacement_request, name='edit_replacement_request'),
-    path('education/add/', views.add_education, name='add_education'),
-    path('experience/add/', views.add_experience, name='add_experience'),
+    path('polls/education/add/', views.add_education, name='add_education'),
+    path('polls/experience/add/', views.add_experience, name='add_experience'),
 ]
