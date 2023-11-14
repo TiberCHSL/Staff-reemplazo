@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import Usuario, Experience, Education, Language
+from .models import Usuario, Experience, Education, Language, ReplacementRequest
 #from .models import Usuario, Curriculum, ReplacementRequest 
 #from .models import Usuario, Curriculum, ReplacementRequest # Importa los modelos adicionales
 
@@ -9,6 +9,7 @@ admin.site.register(Usuario)
 admin.site.register(Experience)
 admin.site.register(Education)
 admin.site.register(Language)
+admin.site.register(ReplacementRequest)
 
 # Registrar el modelo Curriculum para que aparezca en el admin
 #@admin.register(Curriculum)

@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.mail import send_mail  # Importamos la función de Django para enviar emails
 from django.conf import settings  # Importamos la configuración de Django para usar las variables de configuración del correo electrónico
-from .forms import RegistroForm, UserRegistroForm, EducationForm, ExperienceForm, LanguageForm
+from .forms import RegistroForm, UserRegistroForm, EducationForm, ExperienceForm, LanguageForm, ReplacementRequestForm
 #from .forms import CurriculumForm, ReplacementRequestForm, RegistroForm
 #from .models import Curriculum, ReplacementRequest, User
 from .models import User
@@ -135,6 +135,19 @@ def experience_list(request):
     else:
         experiences = User.Experience.objects.filter(user=request.user)
         return render(request, 'experience_list.html', {'experiences': experiences})
+    
+
+def add_replacement_request(request):
+    if request.method == 'POST':
+        form = ReplacementRequestForm(request.POST)
+        if form.is_valid():
+            replacement_request = form.save(commit=False)
+            replacement_request.user = request.user
+            replacement_request.save()
+            return render(request, 'empleador.html')
+    else:
+        form = ReplacementRequestForm()
+    return render(request, 'create_replacement_request.html', {'form': form})
 
 
 

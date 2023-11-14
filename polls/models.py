@@ -174,6 +174,7 @@ class Language(models.Model):
 
 class ReplacementRequest(models.Model):
     user = models.ForeignKey(User, related_name='Empleador', on_delete=models.CASCADE)
+    nombre_empresa = models.CharField(max_length=40)
     fecha = models.DateField()
     cargo = models.CharField(max_length=40)
     carrera = models.CharField(max_length=100, choices=CARRERA_CHOICES, null=True, blank=True)

@@ -1,9 +1,7 @@
 # forms.py
 from django import forms
-from .models import Usuario
 from django.contrib.auth.models import User
-#from .models import Usuario, Curriculum, ReplacementRequest
-from .models import Education, Experience, Language
+from .models import Education, Experience, Language, ReplacementRequest, Usuario
 
 class UserRegistroForm(forms.ModelForm):
     class Meta:
@@ -32,6 +30,10 @@ class LanguageForm(forms.ModelForm):
         fields = ['idioma']
 
 
+class ReplacementRequestForm(forms.ModelForm):
+    class Meta:
+        model = ReplacementRequest
+        fields = ['fecha','nombre_empresa', 'cargo', 'carrera', 'ano_exp', 'idioma_requerido']
 
 #class ReplacementRequestForm(forms.ModelForm):
     #class Meta:
