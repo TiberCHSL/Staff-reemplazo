@@ -18,6 +18,19 @@
             <p>Aquí puedes gestionar tus ofertas de trabajo, ver postulantes y mucho más.</p>
             <a href="{% url 'add_replacement_request' %}">Crear nuevas solicitudes de reemplazo</a>
             <a >Ver la lista de todas las solicitudes de reemplazo</a>
+            {% for request in replacement_requests %}
+        <p>
+            Empresa: {{ request.nombre_empresa }}<br>
+            Nivel de estudio requerido: {{ request.niv_estudio }}<br>
+            Fecha de inicio del trabajo: {{ request.fecha }}<br>
+            Cargo del trabajo: {{ request.cargo }}<br>
+            Carrera requerida: {{ request.carrera }}<br>
+            Años de experiencia requeridos: {{ request.ano_exp }}<br>
+            Descripción del trabajo: {{ request.desc }}<br>
+            Idioma Requerido: {{ request.idioma_requerido }}<br>
+            Género Requerido: {{ request.gender_required }}
+        </p>
+{% endfor %}
         </section>
     </main>
     

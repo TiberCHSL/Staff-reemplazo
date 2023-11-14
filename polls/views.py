@@ -9,7 +9,7 @@ from django.conf import settings  # Importamos la configuración de Django para 
 from .forms import RegistroForm, UserRegistroForm, EducationForm, ExperienceForm, LanguageForm, ReplacementRequestForm
 #from .forms import CurriculumForm, ReplacementRequestForm, RegistroForm
 #from .models import Curriculum, ReplacementRequest, User
-from .models import User
+from .models import User, ReplacementRequest
 from django.contrib.auth.hashers import check_password, make_password
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
@@ -69,8 +69,10 @@ def registro(request):
 
 @login_required
 def vista_empleador(request):
-    # Aquí va la lógica de la vista para el empleador
-    return render(request, 'empleador.html')  # Asegúrate de tener una plantilla 'empleador.html'
+    print("Current user:", request.user)
+    replacement_requests = ReplacementRequest.objects.filter(user=request.user)
+    print("Replacement requests:", replacement_requests)
+    return render(request, 'empleador.html', {'replacement_requests': replacement_requests})
 
 @login_required
 def vista_postulante(request):
@@ -84,9 +86,6 @@ def logout_view(request):
 
 
 
-
-
-
 @login_required
 def add_education(request):
     if request.method == 'POST':
@@ -95,7 +94,7 @@ def add_education(request):
             education = form.save(commit=False)
             education.user = request.user
             education.save()
-            return render(request, 'postulante.html')
+            return redirect('vista_postulante')
     else:
         form = EducationForm()
     return render(request, 'add_education.html', {'form': form})
@@ -108,12 +107,12 @@ def add_experience(request):
             experience = form.save(commit=False)
             experience.user = request.user
             experience.save()
-            return render(request, 'postulante.html')
+            return redirect('vista_postulante')
     else:
         form = ExperienceForm()
     return render(request, 'add_experience.html', {'form': form})
 
-
+@login_required
 def add_language(request):
     if request.method == 'POST':
         form = LanguageForm(request.POST)
@@ -121,11 +120,12 @@ def add_language(request):
             language = form.save(commit=False)
             language.user = request.user
             language.save()
-            return render(request, 'postulante.html')
+            return redirect('vista_postulante')
     else:
         form = LanguageForm()
     return render(request, 'add_language.html', {'form': form})
 
+@login_required
 def experience_list(request):
     if request.method == 'POST':
         experience_id = request.POST.get('experience_id')
@@ -136,7 +136,7 @@ def experience_list(request):
         experiences = User.Experience.objects.filter(user=request.user)
         return render(request, 'experience_list.html', {'experiences': experiences})
     
-
+@login_required
 def add_replacement_request(request):
     if request.method == 'POST':
         form = ReplacementRequestForm(request.POST)
@@ -144,11 +144,10 @@ def add_replacement_request(request):
             replacement_request = form.save(commit=False)
             replacement_request.user = request.user
             replacement_request.save()
-            return render(request, 'empleador.html')
+            return redirect('vista_empleador')
     else:
         form = ReplacementRequestForm()
     return render(request, 'create_replacement_request.html', {'form': form})
-
 
 
 
