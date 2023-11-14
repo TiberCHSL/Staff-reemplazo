@@ -175,10 +175,12 @@ class Language(models.Model):
 class ReplacementRequest(models.Model):
     user = models.ForeignKey(User, related_name='Empleador', on_delete=models.CASCADE)
     nombre_empresa = models.CharField(max_length=40)
+    niv_estudio = models.CharField(max_length=30, verbose_name="Nivel de estudio requerido", choices=[('S', 'Secundario'), ('T', 'Terciario'), ('U', 'Universitario'),('P', 'Posgrado'),('M', 'Master'),('D', 'Doctorado'),('O', 'Otro')])
     fecha = models.DateField()
     cargo = models.CharField(max_length=40)
-    carrera = models.CharField(max_length=100, choices=CARRERA_CHOICES, null=True, blank=True)
+    carrera = models.CharField(max_length=100, verbose_name="Carrera requerida",choices=CARRERA_CHOICES, null=True, blank=True)
     ano_exp = models.IntegerField()
+    desc = models.TextField()
     idioma_requerido = models.CharField(max_length=30, verbose_name="Idioma", choices=IDIOMA_CHOICES, null = True, blank = True)
 
 
