@@ -86,7 +86,7 @@ CARRERA_CHOICES = [
     ('Pedagogía en Educación de Párvulos', 'Pedagogía en Educación de Párvulos'),
     ('Pedagogía en Educación Diferencial', 'Pedagogía en Educación Diferencial'),
     ('Pedagogía en Educación Física', 'Pedagogía en Educación Física'),
-        ('Pedagogía en Filosofía y Religión', 'Pedagogía en Filosofía y Religión'),
+    ('Pedagogía en Filosofía y Religión', 'Pedagogía en Filosofía y Religión'),
     ('Pedagogía en Historia, Geografía y Ciencias Sociales', 'Pedagogía en Historia, Geografía y Ciencias Sociales'),
     ('Pedagogía en Inglés', 'Pedagogía en Inglés'),
     ('Pedagogía en Lenguaje, Comunicación y/o Castellano', 'Pedagogía en Lenguaje, Comunicación y/o Castellano'),
@@ -161,42 +161,26 @@ class Experience(models.Model):
         #self.last_updated = timezone.now()
         #super(Curriculum, self).save(*args, **kwargs)
 
+IDIOMA_CHOICES = [
+    ('IN', 'Ingles'),
+    ('FR', 'Frances'),
+    ('PO', 'Portugués'),
+    ('AL', 'Alemán'),
+    ('IT', 'Italiano'),
+]
 class Language(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    idioma = models.CharField(max_length=30, verbose_name="Idioma", choices=[('I', 'Ingles'),('F', 'Frances'),('P', 'Portugués'),('A', 'Alemán'),('I', 'Italiano')])
-
-    #def __str__(self):
-        #return f"{self.user.full_name}'s Curriculum"
-
-    #def get_absolute_url(self):
-        #return reverse('curriculum-detail', kwargs={'pk': self.pk})#class Curriculum(models.Model):
-    #user = models.ForeignKey(User, on_delete=models.CASCADE)
-    #resume = models.FileField(upload_to='resumes/')
-    #skills = models.TextField()
-    #experience = models.TextField()
-    #education = models.CharField(max_length=255)
-    #certifications = models.CharField(max_length=255, blank=True)
-    #last_updated = models.DateTimeField(default=timezone.now)  # Campo añadido
-
-    #def save(self, *args, **kwargs):
-        #self.last_updated = timezone.now()
-        #super(Curriculum, self).save(*args, **kwargs)
-
-    #def __str__(self):
-        #return f"{self.user.full_name}'s Curriculum"
-
-    #def get_absolute_url(self):
-        #return reverse('curriculum-detail', kwargs={'pk': self.pk})
+    idioma = models.CharField(max_length=30, verbose_name="Idioma", choices=IDIOMA_CHOICES)
 
 #class ReplacementRequest(models.Model):
-    #requested_by = models.ForeignKey(User, related_name='requested_replacements', on_delete=models.CASCADE)
+    #requested_by = models.ForeignKey(User, related_name='Reemplazo solicitado', on_delete=models.CASCADE)
     #date_needed = models.DateField()
     #reason = models.TextField()
     #skills_required = models.TextField()
     #urgency_level = models.CharField(max_length=50, choices=[('Low', 'Low'), ('Medium', 'Medium'), ('High', 'High')])
 
-    #def __str__(self):
-        #return f"Replacement request by {self.requested_by.full_name} for {self.date_needed}"
 
-    #def get_absolute_url(self):
-        #return reverse('replacement-request-detail', kwargs={'pk': self.pk})
+#class PostulateView(models.Model):
+
+    
+    
