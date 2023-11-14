@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.core.mail import send_mail  # Importamos la función de Django para enviar emails
 from django.conf import settings  # Importamos la configuración de Django para usar las variables de configuración del correo electrónico
 from .forms import RegistroForm, UserRegistroForm, EducationForm, ExperienceForm, LanguageForm, ReplacementRequestForm
-from .models import User, ReplacementRequest
+from .models import User, ReplacementRequest, Usuario, Education, Experience, Language
 from django.contrib.auth.hashers import check_password, make_password
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
@@ -153,11 +153,26 @@ def delete_request(request, request_id):
     replacement_request.delete()
     return redirect('vista_empleador')  # replace 'empleador' with the name of your empleador view
 
-#def view_candidates(request, request_id):
-    #replacement_request = get_object_or_404(ReplacementRequest, id=request_id)
+@login_required
+def view_candidates(request, request_id):
+    replacement_request = get_object_or_404(ReplacementRequest, id=request_id)
     # Replace the following line with your logic for retrieving candidates
-    #candidates = Candidate.objects.filter(replacement_request=replacement_request)
-    #return render(request, 'candidates.html', {'candidates': candidates})
+    candidates = User.objects.all()  # This is just a placeholder. Replace with your actual logic for getting candidates.
+
+    # Get additional data for each candidate
+    for candidate in candidates:
+        usuario = Usuario.objects.get(user=candidate)
+        educations = Education.objects.filter(user=candidate)
+        experiences = Experience.objects.filter(user=candidate)
+        languages = Language.objects.filter(user=candidate)
+
+        # Add the additional data to the candidate object
+        candidate.usuario = usuario
+        candidate.educations = educations
+        candidate.experiences = experiences
+        candidate.languages = languages
+
+    return render(request, 'candidates.html', {'candidates': candidates})
 
 
 

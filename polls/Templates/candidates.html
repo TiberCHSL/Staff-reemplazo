@@ -1,0 +1,36 @@
+{% for candidate in candidates %}
+    <p>
+        first_name: {{ candidate.first_name }}<br>
+        last_name: {{ candidate.last_name }}<br>
+        Phone: {{ candidate.usuario.phone }}<br>
+        <!--RUT: {{ candidate.usuario.rut }}<br>-->
+        Fecha de Nacimiento: {{ candidate.usuario.birth_date }}<br>
+        Género: {{ candidate.usuario.gender }}<br>
+    </p>
+    <h3>Educations</h3>
+    {% for education in candidate.educations %}
+        <p>
+            Nivel de estudio: {{ education.niv_estudio }}<br>
+            Carrera: {{ education.carrera }}<br>
+            Institución: {{ education.institucion }}<br>
+            Estado del estudio: {{ education.estado }}<br>
+            Fecha de inicio del estudio: {{ education.fecha_inicio }}<br>
+            Fecha de término del estudio: {{ education.fecha_termino }}
+        </p>
+    {% endfor %}
+    <h3>Experiences</h3>
+    {% for experience in candidate.experiences %}
+        <p>
+            Empresa: {{ experience.empresa }}<br>
+            Años de experiencia: {{ experience.ano_exp }}<br>
+            Cargo: {{ experience.cargo }}<br>
+            Descripción: {{ experience.desc }}
+        </p>
+    {% endfor %}
+    <h3>Languages</h3>
+    {% for language in candidate.languages %}
+        <p>
+            Idioma: {{ language.idioma }}
+        </p>
+    {% endfor %}
+{% endfor %}

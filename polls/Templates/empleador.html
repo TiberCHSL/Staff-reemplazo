@@ -19,7 +19,6 @@
             <!-- Agrega aquí más secciones específicas para empleadores -->
             <p>Aquí puedes gestionar tus ofertas de trabajo, ver postulantes y mucho más.</p>
             <a href="{% url 'add_replacement_request' %}">Crear nuevas solicitudes de reemplazo</a>
-            <a >Ver la lista de todas las solicitudes de reemplazo</a>
             {% for request in replacement_requests %}
         <p>
             Empresa: {{ request.nombre_empresa }}<br>
@@ -33,7 +32,7 @@
             Género Requerido: {{ request.gender_required }}
         </p>
             <a href="{% url 'delete_request' request.id %}" class="btn btn-danger">Eliminar</a>
-            <a  class="btn btn-primary">Ver candidatos</a>
+            <a href="{% url 'view_candidates' request.id %}" class="btn btn-primary">Ver candidatos</a>
             {% endfor %}
         </section>
     </main>
