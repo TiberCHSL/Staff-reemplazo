@@ -26,4 +26,5 @@ urlpatterns = [
     #path('polls/replacement-requests/edit/<int:pk>/', views.edit_replacement_request, name='edit_replacement_request'),
     path('polls/education/add/', views.add_education, name='add_education'),
     path('polls/experience/add/', views.add_experience, name='add_experience'),
+     path('polls/language/add/', views.add_language, name='add_language'),
 ]

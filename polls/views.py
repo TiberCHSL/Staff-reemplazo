@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.mail import send_mail  # Importamos la función de Django para enviar emails
 from django.conf import settings  # Importamos la configuración de Django para usar las variables de configuración del correo electrónico
-from .forms import RegistroForm, UserRegistroForm
+from .forms import RegistroForm, UserRegistroForm, EducationForm, ExperienceForm, LanguageForm
 #from .forms import CurriculumForm, ReplacementRequestForm, RegistroForm
 #from .models import Curriculum, ReplacementRequest, User
 from .models import User
@@ -15,7 +15,6 @@ from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 #from .forms import ReplacementRequestForm
-from .forms import EducationForm, ExperienceForm
 
 
 # Definir las vistas faltantes
@@ -96,7 +95,7 @@ def add_education(request):
             education = form.save(commit=False)
             education.user = request.user
             education.save()
-            return render(request, 'empleador.html')
+            return render(request, 'postulante.html')
     else:
         form = EducationForm()
     return render(request, 'add_education.html', {'form': form})
@@ -109,11 +108,33 @@ def add_experience(request):
             experience = form.save(commit=False)
             experience.user = request.user
             experience.save()
-            return render(request, 'empleador.html')
+            return render(request, 'postulante.html')
     else:
         form = ExperienceForm()
     return render(request, 'add_experience.html', {'form': form})
 
+
+def add_language(request):
+    if request.method == 'POST':
+        form = LanguageForm(request.POST)
+        if form.is_valid():
+            language = form.save(commit=False)
+            language.user = request.user
+            language.save()
+            return render(request, 'postulante.html')
+    else:
+        form = LanguageForm()
+    return render(request, 'add_language.html', {'form': form})
+
+def experience_list(request):
+    if request.method == 'POST':
+        experience_id = request.POST.get('experience_id')
+        if experience_id:
+            User.Experience.objects.get(id=experience_id).delete()
+        return redirect('experience_list')
+    else:
+        experiences = User.Experience.objects.filter(user=request.user)
+        return render(request, 'experience_list.html', {'experiences': experiences})
 
 
 
