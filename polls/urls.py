@@ -4,7 +4,7 @@ from .views import index, login, registro, delete_request
 from . import views
 #from .views import curriculum_list
 #from .views import (create_replacement_request, replacement_request_list,edit_replacement_request, cancel_replacement_request)
-                    
+from .views import edit_replacement_request    
 
 urlpatterns = [
     path("", index, name="index"),
@@ -29,4 +29,5 @@ urlpatterns = [
     path('polls/language/add/', views.add_language, name='add_language'),
     path('polls/replacement_request/add/', views.add_replacement_request, name='add_replacement_request'),
     path('delete_request/<int:request_id>/', delete_request, name='delete_request'),
+    path('replacement_request/<int:pk>/edit/', edit_replacement_request, name='edit_replacement_request'),
 ]

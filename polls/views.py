@@ -153,6 +153,37 @@ def delete_request(request, request_id):
     replacement_request.delete()
     return redirect('vista_empleador')  # replace 'empleador' with the name of your empleador view
 
+@login_required
+def edit_replacement_request(request, pk):
+    replacement_request = get_object_or_404(ReplacementRequest, pk=pk)
+    if request.method == 'POST':
+        form = ReplacementRequestForm(request.POST, instance=replacement_request)
+        if form.is_valid():
+            form.save()
+            return redirect('vista_empleador')  # Reemplaza con la vista correspondiente
+    else:
+        form = ReplacementRequestForm(instance=replacement_request)
+    return render(request, 'edit_replacement_request.html', {'form': form})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #def view_candidates(request, request_id):
     #replacement_request = get_object_or_404(ReplacementRequest, id=request_id)
     # Replace the following line with your logic for retrieving candidates
