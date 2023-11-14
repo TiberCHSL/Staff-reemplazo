@@ -149,7 +149,7 @@ class Education(models.Model):
     institucion = models.TextField(max_length = 40)
     estado = models.CharField(max_length=30, verbose_name="Estado del estudio", choices=[('E', 'En curso'),('G', 'Graduado'),('A', 'Abandonado')])
     fecha_inicio = models.DateField(verbose_name="Fecha de inicio del estudio", null=True, blank=True)
-    fecha_termino = models.DateField(verbose_name="Fecha de termino del estudio", null=True, blank=True)
+    fecha_termino = models.DateField(verbose_name="Fecha de término del estudio", null=True, blank=True)
 
 class Experience(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -176,11 +176,11 @@ class ReplacementRequest(models.Model):
     user = models.ForeignKey(User, related_name='Empleador', on_delete=models.CASCADE)
     nombre_empresa = models.CharField(max_length=40)
     niv_estudio = models.CharField(max_length=30, verbose_name="Nivel de estudio requerido", choices=[('S', 'Secundario'), ('T', 'Terciario'), ('U', 'Universitario'),('P', 'Posgrado'),('M', 'Master'),('D', 'Doctorado'),('O', 'Otro')])
-    fecha = models.DateField()
-    cargo = models.CharField(max_length=40)
+    fecha = models.DateField(verbose_name = "Fecha de inicio del trabajo")
+    cargo = models.CharField(max_length=40, verbose_name = "Cargo del trabajo")
     carrera = models.CharField(max_length=100, verbose_name="Carrera requerida",choices=CARRERA_CHOICES, null=True, blank=True)
-    ano_exp = models.IntegerField()
-    desc = models.TextField()
+    ano_exp = models.IntegerField(verbose_name = "Años de experiencia requeridos")
+    desc = models.TextField(verbose_name = "Descripción del trabajo")
     idioma_requerido = models.CharField(max_length=30, verbose_name="Idioma Requerido", choices=IDIOMA_CHOICES, null = True, blank = True)
     gender_required = models.CharField(max_length=10, verbose_name="Género Requerido", choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')], null = True, blank = True)
 
