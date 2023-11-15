@@ -1,10 +1,19 @@
 {% extends 'base.html' %}
+{% load field_filters %}
 
 {% block content %}
   <h2>Crear solicitud de reemplazo</h2>
   <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
+    {% for field in form %}
+      <div class="fieldWrapper">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.name|ends_with:"_priority" %}
+          <div class="priorityBox">{{ field.value }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
     <button type="submit" class="Crear_reemplazo">Crear solicitud de reemplazo</button>
   </form>
 {% endblock %}

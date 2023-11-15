@@ -165,6 +165,7 @@ def edit_replacement_request(request, pk):
         form = ReplacementRequestForm(instance=replacement_request)
     return render(request, 'edit_replacement_request.html', {'form': form})
 
+@login_required
 def view_candidates(request, request_id):
     replacement_request = get_object_or_404(ReplacementRequest, id=request_id)
     candidates = User.objects.all() 
@@ -188,22 +189,22 @@ def view_candidates(request, request_id):
         # Increment score based on matching attributes with the replacement request
         for education in educations:
             if replacement_request.niv_estudio == education.niv_estudio:
-                candidate.score += 10
+                candidate.score += 5 * replacement_request.niv_estudio_priority
             if replacement_request.carrera == education.carrera:
-                candidate.score += 10
+                candidate.score += 5 * replacement_request.carrera_priority
 
         for experience in experiences:
             if replacement_request.cargo == experience.cargo:
-                candidate.score += 10
+                candidate.score += 5 * replacement_request.cargo_priority
             if replacement_request.ano_exp <= experience.ano_exp:
-                candidate.score += (experience.ano_exp - replacement_request.ano_exp)
+                candidate.score += (experience.ano_exp - replacement_request.ano_exp) * replacement_request.ano_exp_priority
 
         for language in languages:
             if replacement_request.idioma_requerido == language.idioma:
-                candidate.score += 10
+                candidate.score += 5 * replacement_request.idioma_requerido_priority
 
         if replacement_request.gender_required == usuario.gender:
-            candidate.score += 10
+            candidate.score += 5 * replacement_request.gender_required_priority
 
     # Sort candidates by score in descending order
     candidates = sorted(candidates, key=lambda candidate: candidate.score, reverse=True)

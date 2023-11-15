@@ -184,8 +184,11 @@ class ReplacementRequest(models.Model):
     idioma_requerido = models.CharField(max_length=30, verbose_name="Idioma Requerido", choices=IDIOMA_CHOICES, null = True, blank = True)
     gender_required = models.CharField(max_length=10, verbose_name="Género Requerido", choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')], null = True, blank = True)
 
-
-#class PostulateView(models.Model):
+    niv_estudio_priority = models.IntegerField(default=5)
+    carrera_priority = models.IntegerField(default=5)
+    ano_exp_priority = models.IntegerField(default=5)
+    idioma_requerido_priority = models.IntegerField(default=5)
+    gender_required_priority = models.IntegerField(default=5)
 
     
     

@@ -33,7 +33,8 @@ class LanguageForm(forms.ModelForm):
 class ReplacementRequestForm(forms.ModelForm):
     class Meta:
         model = ReplacementRequest
-        fields = ['fecha','nombre_empresa','niv_estudio', 'cargo', 'carrera', 'ano_exp', 'desc', 'idioma_requerido','gender_required']
+        fields = ['fecha', 'nombre_empresa', 'niv_estudio', 'cargo', 'carrera', 'ano_exp', 'desc', 'idioma_requerido', 'gender_required'
+                  , 'niv_estudio_priority', 'carrera_priority', 'ano_exp_priority',  'idioma_requerido_priority', 'gender_required_priority']
 
 #class ReplacementRequestForm(forms.ModelForm):
     #class Meta:
