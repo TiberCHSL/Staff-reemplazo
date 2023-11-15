@@ -1,36 +1,70 @@
+<style>
+    .candidate-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    .candidate-header {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+    .candidate-details, .education-details, .experience-details, .language-details {
+        background-color: #fff;
+        border: 1px solid #eee;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .section-header {
+        font-size: 16px;
+        color: #666;
+        margin-top: 20px;
+    }
+    .candidate-details p, .education-details p, .experience-details p, .language-details p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+</style>
+
 {% for candidate in candidates %}
-    <p>
-        first_name: {{ candidate.first_name }}<br>
-        last_name: {{ candidate.last_name }}<br>
-        Phone: {{ candidate.usuario.phone }}<br>
-        <!--RUT: {{ candidate.usuario.rut }}<br>-->
-        Fecha de Nacimiento: {{ candidate.usuario.birth_date }}<br>
-        Género: {{ candidate.usuario.gender }}<br>
-    </p>
-    <h3>Educations</h3>
-    {% for education in candidate.educations %}
-        <p>
-            Nivel de estudio: {{ education.niv_estudio }}<br>
-            Carrera: {{ education.carrera }}<br>
-            Institución: {{ education.institucion }}<br>
-            Estado del estudio: {{ education.estado }}<br>
-            Fecha de inicio del estudio: {{ education.fecha_inicio }}<br>
-            Fecha de término del estudio: {{ education.fecha_termino }}
-        </p>
-    {% endfor %}
-    <h3>Experiences</h3>
-    {% for experience in candidate.experiences %}
-        <p>
-            Empresa: {{ experience.empresa }}<br>
-            Años de experiencia: {{ experience.ano_exp }}<br>
-            Cargo: {{ experience.cargo }}<br>
-            Descripción: {{ experience.desc }}
-        </p>
-    {% endfor %}
-    <h3>Languages</h3>
-    {% for language in candidate.languages %}
-        <p>
-            Idioma: {{ language.idioma }}
-        </p>
-    {% endfor %}
+    <div class="candidate-container">
+        <div class="candidate-header">
+            <strong>Candidato:</strong> {{ candidate.first_name }} {{ candidate.last_name }}
+        </div>
+        <div class="candidate-details">
+            <p>Phone: {{ candidate.usuario.phone }}</p>
+            <p>Fecha de Nacimiento: {{ candidate.usuario.birth_date }}</p>
+            <p>Género: {{ candidate.usuario.gender }}</p>
+        </div>
+
+        <h3 class="section-header">Educations</h3>
+        {% for education in candidate.educations %}
+            <div class="education-details">
+                <p>Nivel de estudio: {{ education.niv_estudio }}</p>
+                <p>Carrera: {{ education.carrera }}</p>
+                <p>Institución: {{ education.institucion }}</p>
+                <p>Estado del estudio: {{ education.estado }}</p>
+                <p>Fecha de inicio del estudio: {{ education.fecha_inicio }}</p>
+                <p>Fecha de término del estudio: {{ education.fecha_termino }}</p>
+            </div>
+        {% endfor %}
+
+        <h3 class="section-header">Experiences</h3>
+        {% for experience in candidate.experiences %}
+            <div class="experience-details">
+                <p>Empresa: {{ experience.empresa }}</p>
+                <p>Años de experiencia: {{ experience.ano_exp }}</p>
+                <p>Cargo: {{ experience.cargo }}</p>
+                <p>Descripción: {{ experience.desc }}</p>
+            </div>
+        {% endfor %}
+
+        <h3 class="section-header">Languages</h3>
+        {% for language in candidate.languages %}
+            <div class="language-details">
+                <p>Idioma: {{ language.idioma }}</p>
+            </div>
+        {% endfor %}
+    </div>
 {% endfor %}
