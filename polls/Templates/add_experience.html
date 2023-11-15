@@ -54,13 +54,13 @@
 </style>
 
 <div class="container">
-  <h2>Add Experience</h2>
+  <h2>Añadir Experiencia Laboral</h2>
   <form method="POST">
     {% csrf_token %}
     <div class="form-group">
         {{ form.as_p }}
     </div>
-    <button type="submit">Save</button>
+    <button type="submit">Guardar</button>
   </form>
 </div>
 {% endblock %}
