@@ -184,7 +184,7 @@ def view_candidates(request, request_id):
         candidate.languages = languages
 
         # Initialize score
-        candidate.score = 0
+        candidate.score = 1
 
         # Increment score based on matching attributes with the replacement request
         for education in educations:
